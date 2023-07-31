@@ -193,3 +193,78 @@ HAVING
 ORDER BY 
     person_id
 LIMIT 5;
+
+/*
+Stage 6: Grade codes
+
+You have the score table that contains the student's annual scores. But you don't know the students grade_code. 
+
+However, you do know that:
+    If there is no score in the score table, the grade code is GD-09;
+    If the score count is 1 in the score table, the grade code is GD-10;
+    If the score count is 2 in the score table, the grade code is GD-11;
+    If the score count is 3 in the score table, the grade code will be GD-12.
+
+With this information, fill in grade_code in the student table.
+*/
+
+-- Update grade_code to GD-09 when there is no score
+UPDATE student
+SET grade_code = 'GD-09'
+WHERE student.person_id NOT IN
+(SELECT person_id
+FROM score);
+
+-- Update grade_code to GD-10 when count(score) = 1
+UPDATE student
+SET grade_code = 'GD-10'
+WHERE student.person_id in
+(SELECT person_id
+FROM (SELECT 
+        person_id, 
+        count(score)
+    FROM 
+        score
+    GROUP BY 
+        person_id
+    HAVING 
+        count(score) = 1)
+);
+
+-- Update grade_code to GD-11 when count(score) = 2
+UPDATE student
+SET grade_code = 'GD-11'
+WHERE student.person_id in
+(SELECT person_id
+FROM (SELECT 
+        person_id, 
+        count(score)
+    FROM 
+        score
+    GROUP BY 
+        person_id
+    HAVING 
+        count(score) = 2)
+);
+
+-- Update grade_code to GD-12 when count(score) = 3
+UPDATE student
+SET grade_code = 'GD-12'
+WHERE student.person_id in
+(SELECT person_id
+FROM (SELECT 
+        person_id, 
+        count(score)
+    FROM 
+        score
+    GROUP BY 
+        person_id
+    HAVING 
+        count(score) = 3)
+);
+
+/* Select all records from the student table, 
+order by person_id, and limit by 5 */
+SELECT * FROM student
+ORDER BY person_id
+LIMIT 5;
