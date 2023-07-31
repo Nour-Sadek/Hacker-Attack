@@ -147,3 +147,49 @@ UNION ALL
 SELECT * FROM score2
 UNION ALL
 SELECT * FROM score3;
+
+/*
+Stage 5: I know your score
+
+create the score table. Insert the scores into the score table. 
+When everything is done, delete score1, score2, and score3 tables with the DROP command.
+*/
+
+-- Create the score table
+CREATE TABLE "score" (
+    "person_id" VARCHAR(9),
+    "score" INTEGER
+);
+
+-- Insert the data from the three scores tables to score table
+INSERT INTO score
+SELECT * FROM merged_scores;
+
+-- Delete the three score tables
+DROP TABLE score1;
+DROP TABLE score2;
+DROP TABLE score3;
+
+/* Select all columns from the score table. 
+Order the results by person_id. 
+Limit results to 5 */
+SELECT * FROM score
+ORDER BY person_id
+LIMIT 5;
+
+/* Select person_id, count(score) from the score table. 
+Group by person_id. 
+Having count(score) value 3 and order the results by person_id. 
+Limit results to 5 */
+SELECT 
+    person_id, 
+    count(score)
+FROM 
+    score
+GROUP BY 
+    person_id
+HAVING 
+    count(score) = 3
+ORDER BY 
+    person_id
+LIMIT 5;
