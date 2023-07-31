@@ -268,3 +268,29 @@ order by person_id, and limit by 5 */
 SELECT * FROM student
 ORDER BY person_id
 LIMIT 5;
+
+/*
+Stage 7: Land ho!
+
+ou've created your database. For the last-year students who have grade code GD-12 in the student table, calculate the average score.
+
+Select all records from the score table. Calculate the average score as avg_score. Round to 2 decimal places. 
+Display it if the grade_code is GD-12 in the student table. 
+Group by person_id and order the results by avg_score in descending order
+*/
+
+SELECT 
+    person_id, 
+    ROUND(AVG(score), 2) AS avg_score
+FROM 
+    score
+GROUP BY 
+    person_id
+HAVING 
+    person_id IN (
+        SELECT person_id FROM student
+        WHERE grade_code = 'GD-12'
+        )
+ORDER BY 
+    avg_score DESC;
+    
