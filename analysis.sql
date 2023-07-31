@@ -141,6 +141,7 @@ CREATE TABLE "score3" (
 .mode column
 
 -- Merge data from the three score tables
+CREATE VIEW merged_scores AS
 SELECT * FROM score1
 UNION ALL
 SELECT * FROM score2
