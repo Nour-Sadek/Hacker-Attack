@@ -18,7 +18,7 @@ CREATE TABLE "person"(
 
 -- Import data from person.csv file
 .mode csv
-.import --skip 1 person.csv person
+.import --skip 1 ./csv_files/person.csv person
 .mode column 
 
 -- A simple query
@@ -52,7 +52,7 @@ CREATE TABLE "teacher" (
 
 -- Import data from teacher.csv file
 .mode csv
-.import --skip 1 teacher.csv teacher
+.import --skip 1 ./csv_files/teacher.csv teacher
 .mode column 
 
 -- Query to select students from person table
@@ -135,9 +135,9 @@ CREATE TABLE "score3" (
 
 -- Import the data from the three csv files
 .mode csv
-.import --skip 1 score1.csv score1
-.import --skip 1 score2.csv score2
-.import --skip 1 score3.csv score3
+.import --skip 1 ./csv_files/score1.csv score1
+.import --skip 1 ./csv_files/score2.csv score2
+.import --skip 1 ./csv_files/score3.csv score3
 .mode column
 
 -- Merge data from the three score tables
@@ -293,4 +293,3 @@ HAVING
         )
 ORDER BY 
     avg_score DESC;
-    
